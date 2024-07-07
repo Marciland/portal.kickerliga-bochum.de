@@ -1,0 +1,27 @@
+things i changed compared to original:
+
+og: header margin top when site is wider than 1000px is set to 28px
+mine: never add top margin to header
+
+og: header font-family, line-height etc
+mine: custom by me, hard to reproduce original
+
+og: footer changes from col to row at >800px
+mine: changing at >600px instead to be the same as header
+
+optional: negative margin top/bottom on logo could be removed?
+
+og: header navbar toggler is white/grey
+mine: made it red based on the other red stuff
+
+og: at >600 pixel expand menu in header
+mine: using bootstraps md (>768px) for convenience
+
+og: header menu has dark background inside (if open)
+mine: i decided for dark layout and light inside
+
+og: links in header menu
+mine: dropdown, no top links
+
+og: hover opens submenus
+mine: click opens submenus, added arrow to indicate that there is a submenu hidden
