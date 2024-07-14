@@ -116,7 +116,6 @@ onUnmounted(() => {
           >
         </li>
       </ul>
-      <div style="display: none">Suche?</div>
     </div>
   </nav>
 </template>
