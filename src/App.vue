@@ -24,33 +24,13 @@ const resizeMain = () => {
   }
 };
 
-const flipDropdownArrow = (event) => {
-  if (event.type.includes("show")) {
-    event.target.classList.add("flipped-arrow");
-  } else {
-    event.target.classList.remove("flipped-arrow");
-  }
-};
-
 onMounted(() => {
   window.addEventListener("load", resizeMain);
   window.addEventListener("resize", resizeMain);
-  const spieltage = document.getElementById("spieltage");
-  spieltage.addEventListener("show.bs.dropdown", flipDropdownArrow);
-  spieltage.addEventListener("hide.bs.dropdown", flipDropdownArrow);
-  const ergebnisse = document.getElementById("ergebnisse");
-  ergebnisse.addEventListener("show.bs.dropdown", flipDropdownArrow);
-  ergebnisse.addEventListener("hide.bs.dropdown", flipDropdownArrow);
 });
 onUnmounted(() => {
   window.removeEventListener("load", resizeMain);
   window.removeEventListener("resize", resizeMain);
-  const spieltage = document.getElementById("spieltage");
-  spieltage.removeEventListener("show.bs.dropdown", flipDropdownArrow);
-  spieltage.removeEventListener("hide.bs.dropdown", flipDropdownArrow);
-  const ergebnisse = document.getElementById("ergebnisse");
-  ergebnisse.removeEventListener("show.bs.dropdown", flipDropdownArrow);
-  ergebnisse.removeEventListener("hide.bs.dropdown", flipDropdownArrow);
 });
 </script>
 <template>

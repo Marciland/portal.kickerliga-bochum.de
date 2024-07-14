@@ -6,17 +6,33 @@ const addOffset = (event) => {
   menu.style.left = event.target.offsetLeft + "px";
 };
 
+const flipDropdownArrow = (event) => {
+  if (event.type.includes("show")) {
+    event.target.classList.add("flipped-arrow");
+  } else {
+    event.target.classList.remove("flipped-arrow");
+  }
+};
+
 onMounted(() => {
   const spieltage = document.getElementById("spieltage");
   spieltage.addEventListener("show.bs.dropdown", addOffset);
+  spieltage.addEventListener("show.bs.dropdown", flipDropdownArrow);
+  spieltage.addEventListener("hide.bs.dropdown", flipDropdownArrow);
   const ergebnisse = document.getElementById("ergebnisse");
   ergebnisse.addEventListener("show.bs.dropdown", addOffset);
+  ergebnisse.addEventListener("show.bs.dropdown", flipDropdownArrow);
+  ergebnisse.addEventListener("hide.bs.dropdown", flipDropdownArrow);
 });
 onUnmounted(() => {
   const spieltage = document.getElementById("spieltage");
   spieltage.removeEventListener("show.bs.dropdown", addOffset);
+  spieltage.removeEventListener("show.bs.dropdown", flipDropdownArrow);
+  spieltage.removeEventListener("hide.bs.dropdown", flipDropdownArrow);
   const ergebnisse = document.getElementById("ergebnisse");
   ergebnisse.removeEventListener("show.bs.dropdown", addOffset);
+  ergebnisse.removeEventListener("show.bs.dropdown", flipDropdownArrow);
+  ergebnisse.removeEventListener("hide.bs.dropdown", flipDropdownArrow);
 });
 </script>
 <template>
