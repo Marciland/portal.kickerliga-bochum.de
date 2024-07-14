@@ -1,4 +1,24 @@
-<script setup></script>
+<script setup>
+import { onMounted, onUnmounted } from "vue";
+
+const addOffset = (event) => {
+  const menu = document.getElementById(event.target.id + "-menu");
+  menu.style.left = event.target.offsetLeft + "px";
+};
+
+onMounted(() => {
+  const spieltage = document.getElementById("spieltage");
+  spieltage.addEventListener("show.bs.dropdown", addOffset);
+  const ergebnisse = document.getElementById("ergebnisse");
+  ergebnisse.addEventListener("show.bs.dropdown", addOffset);
+});
+onUnmounted(() => {
+  const spieltage = document.getElementById("spieltage");
+  spieltage.removeEventListener("show.bs.dropdown", addOffset);
+  const ergebnisse = document.getElementById("ergebnisse");
+  ergebnisse.removeEventListener("show.bs.dropdown", addOffset);
+});
+</script>
 <template>
   <nav
     class="navbar bg-dark navbar-expand-md"
@@ -28,7 +48,7 @@
             href="#"
             >Spieltage</a
           >
-          <ul class="dropdown-menu">
+          <ul id="spieltage-menu" class="dropdown-menu">
             <li class="dropdown-item">
               <a href="https://kickerliga-bochum.de/spieltage-1-liga/"
                 >Spieltage 1. Liga</a
@@ -55,7 +75,7 @@
             href="#"
             >Ergebnisse</a
           >
-          <ul class="dropdown-menu">
+          <ul id="ergebnisse-menu" class="dropdown-menu">
             <li class="dropdown-item">
               <a href="https://kickerliga-bochum.de/fixtures-results/"
                 >Ergebnisse 1. Liga</a
@@ -115,7 +135,7 @@
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 0, 0, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 .header-menu {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgb(38, 42, 46);
 }
 .header-menu > ul,
 .header-menu > ul > li > ul {
@@ -144,10 +164,10 @@
   padding-bottom: 8.75px;
 }
 .dropdown-menu {
+  background-color: rgb(33, 37, 41);
+  color: inherit;
   position: static;
   float: none;
-  color: inherit;
-  background-color: rgba(255, 255, 255, 0.1);
   padding: 0px;
   border: 0px;
   margin: 0px;
@@ -174,5 +194,20 @@
 .flipped-arrow::after {
   transform: rotate(225deg);
   margin: 0.4em 0 0 0.4em;
+}
+@media (min-width: 768px) {
+  .header-menu > ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .header-menu > ul > li > a,
+  .header-menu > ul > li > ul > li > a {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .dropdown-menu {
+    position: absolute;
+  }
 }
 </style>
