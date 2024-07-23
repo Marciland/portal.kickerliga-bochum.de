@@ -22,6 +22,8 @@ const submit = (entries) => {
       name="key"
       as="input"
       type="text"
+      class="field-input"
+      style="width: 200px"
       placeholder="Schlüssel zur Autorisierung"
     />
     <ErrorMessage name="key" />
@@ -31,6 +33,7 @@ const submit = (entries) => {
           :name="`field${i}`"
           as="input"
           type="text"
+          class="field-input"
           placeholder="Name des Spielers"
         />
         <ErrorMessage :name="`field${i}`" />
@@ -61,6 +64,10 @@ const submit = (entries) => {
 .field {
   display: flex;
   flex-direction: column;
+  text-align: center;
+  padding: 2px;
+}
+.field-input::placeholder {
   text-align: center;
 }
 @media (min-width: 601px) {

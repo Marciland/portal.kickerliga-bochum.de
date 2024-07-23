@@ -5,6 +5,7 @@ const validSchema = yup.object().shape({
     .string()
     .required("Autorisierung notwendig!")
     .test("jwt", "Kein gültiger Schlüssel!", (value) => {
+      if (value === undefined || value === null || value === "") return true;
       try {
         const base64Url = value.split(".")[1];
         const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -24,7 +25,11 @@ const validSchema = yup.object().shape({
   ...Array.from({ length: 20 }, (_, i) => ({
     [`field${i}`]: yup
       .string()
-      .matches(/^[A-Z][a-z]{2,} [A-Z][a-z]{2,}$/, "Kein gültiger Name!"),
+      .test("is name valid", "Kein gültiger Name!", (value) => {
+        return value === undefined || value === null || value === ""
+          ? true
+          : /^[A-Z][a-z]{2,} [A-Z][a-z]{2,}$/.test(value);
+      }),
   })).reduce((acc, curr) => ({ ...acc, ...curr }), {}),
 });
 
