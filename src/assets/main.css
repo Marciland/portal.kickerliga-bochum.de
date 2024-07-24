@@ -10,7 +10,7 @@ main {
   min-height: calc(100vh - var(--header-height) - var(--footer-height));
 }
 .kickerliga-link {
-  color: #e80000;
+  color: #e80000 !important;
   text-decoration: none;
 }
 .bg-dark {
