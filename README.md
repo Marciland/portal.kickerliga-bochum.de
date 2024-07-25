@@ -15,6 +15,7 @@ This repository contains the code for the portal subdomain of the kickerliga-boc
 ## Technologies Used
 
 - **Frontend**: Vue.js 3
+- **Backend**: Python 3.10.0
 - **Build Tool**: Vite
 - **Runtime**: Node.js v21.7.3
 
