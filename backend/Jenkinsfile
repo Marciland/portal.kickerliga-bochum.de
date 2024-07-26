@@ -1,0 +1,50 @@
+String dockerRun = 'docker run -d --restart always --name'
+String imageName = 'portal.kickerliga-bochum.de'
+
+pipeline {
+    agent {
+        label 'jenkins'
+    }
+    stages {
+        stage ('Test') {
+            steps {
+                script {
+                    dir ('backend') {
+                        sh 'pip install -r requirements.txt'
+                        sh 'python -m pylint .'
+                        // sh 'python -m pytest --cov-report=xml'
+                        // sh 'coverage report'
+                    }
+                }
+            }
+        }
+        stage ('Build') {
+            steps {
+                script {
+                    dir ('backend') {
+                        sh "docker build --tag ${imageName}:latest ."
+                    }
+                }
+            }
+        }
+        stage ('Deploy') {
+            steps {
+                script {
+                    try {
+                        sh "docker stop ${imageName} && docker rm ${imageName}"
+                    }
+                    catch (ignored) {
+                        println("${imageName} has not been running!")
+                    }
+                    sh "${dockerRun} ${imageName} -p 0.0.0.0:8001:8001 ${imageName}:latest"
+                    sh 'docker image prune -f'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}

@@ -19,32 +19,51 @@ This repository contains the code for the portal subdomain of the kickerliga-boc
 
 ## Installation
 
-To install the necessary dependencies, make sure you have Node.js (preferably v21.7.3) and Python3 (prefereably 3.10) installed.
+### Frontend
+
+To install the necessary dependencies, make sure you have Node.js (preferably v21.7.3) installed.
 Then, run the following commands:
 
 ```sh
-cd frontend
 npm install
 ```
 
+### Backend
+
+To install the necessary dependencies, make sure you have Python3 (prefereably 3.10) installed.
+Then, run the following commands:
+
 ```sh
-cd backend
 pip install -r requirements.txt
 ```
 
 ## Running the Project
 
-To run the project locally, use:
+### Frontend
+
+To run the frontend locally, use:
 
 ```sh
 npm run dev
 ```
 
-This will start the development server, and you can view the project in your browser at `http://localhost:5173`.
+This will start the development server, and you can view the frontend in your browser at `http://localhost:5173`.
+
+### Backend
+
+To run the backend locally, use:
+
+```sh
+python main.py -d
+```
+
+This will start the development API, and you can view the API in your browser at `http://localhost:8001/docs`.
 
 ## Deployment
 
-To build the project for production, run:
+### Frontend
+
+To build the frontend for production, run:
 
 ```sh
 npm run build
@@ -52,10 +71,23 @@ npm run build
 
 This will generate the static HTML files that you need to serve.
 
+### Backend
+
+To build the API for production, run:
+
+```sh
+docker build --tag portal.kickerliga-bochum.de:latest .
+docker run -d --restart always \
+       --name portal.kickerliga-bochum.de \
+       -p 0.0.0.0:8001:8001 \
+       portal.kickerliga-bochum.de:latest
+```
+
 ## Features
 
-- Team captains can create and manage player lists for their teams.
-- User-friendly interface built with Vue.js 3.
+- Team captains can create player lists for their teams
+- User-friendly interface built with Vue.js 3
+- JWT secured API built with FastAPI 0.109.2
 
 ## Contributing
 
