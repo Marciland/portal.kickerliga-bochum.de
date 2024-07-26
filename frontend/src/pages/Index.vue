@@ -39,7 +39,7 @@ const submit = async (entries) => {
 
   try {
     let response = await fetch(
-      "http://127.0.0.1:8001/team/create", //todo use domain
+      "https://marciland.net/kickerliga-bochum/api/team/create",
       requestOptions
     );
     if (!response.ok) {
