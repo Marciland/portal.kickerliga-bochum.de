@@ -6,9 +6,30 @@ import validSchema from "@/components/schema";
 
 const isSubmitting = ref(false);
 
-const submit = (entries) => {
+const submit = async (entries) => {
   isSubmitting.value = true;
-  console.log(entries);
+  console.log(entries); // todo remove
+
+  let payload = {
+    key:
+    mk1:
+    mk2:
+    players: []
+  }
+  // todo build valid body from entries
+
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  };
+  let response = await fetch(
+    "http://127.0.0.1:8001/team/create", //todo adjust
+    requestOptions
+  );
+
+  console.log(response) //todo remove
+
   isSubmitting.value = false;
 };
 </script>
