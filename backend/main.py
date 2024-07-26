@@ -1,20 +1,12 @@
-'''Start up script for the Backend'''
 from argparse import ArgumentParser, Namespace
 
 import uvicorn
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
-
-from pydantic import BaseModel
+from models import TeamModel
 
 
 def get_arguments() -> Namespace:
-    '''
-    Parses arguments.
-
-        Returns:
-            args: given arguments
-    '''
     parser = ArgumentParser(description='Generic API')
     parser.add_argument('-d', '--develop', action='store_true', default=False,
                         dest='develop', required=False,
@@ -23,12 +15,6 @@ def get_arguments() -> Namespace:
 
 
 def start() -> FastAPI | None:
-    '''
-    Starts the API. Callable by uvicorn, gunicorn etc.
-
-        Returns:
-            api (FastAPI): api containing all routes and specs
-    '''
     args = get_arguments()
     docs_url = '/docs' if args.develop else None
 
@@ -42,15 +28,8 @@ def start() -> FastAPI | None:
         allow_headers=['*']
     )
 
-    class Team(BaseModel):
-        '''WIP'''
-        key: str
-        mk1: str
-        mk2: str
-        players: list[str]
-
     @api.post('/team/create', status_code=status.HTTP_201_CREATED)
-    def create_team(team: Team):
+    def create_team(team: TeamModel):
         print(team)
 
     return api

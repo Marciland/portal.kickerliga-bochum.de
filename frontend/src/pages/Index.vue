@@ -6,29 +6,48 @@ import validSchema from "@/components/schema";
 
 const isSubmitting = ref(false);
 
+const getPlayers = (entries) => {
+  let players = [];
+
+  for (let i = 1; i <= 18; i++) {
+    let entry = entries[`field${i}`];
+    if (entry) {
+      players.push(entry);
+    }
+  }
+
+  return players;
+};
+
 const submit = async (entries) => {
   isSubmitting.value = true;
-  console.log(entries); // todo remove
 
   let payload = {
-    key:
-    mk1:
-    mk2:
-    players: []
-  }
-  // todo build valid body from entries
+    mk1: entries["mk-field1"],
+    mk2: entries["mk-field2"],
+    players: getPlayers(entries),
+  };
 
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${entries.key}`,
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(payload),
   };
-  let response = await fetch(
-    "http://127.0.0.1:8001/team/create", //todo adjust
-    requestOptions
-  );
 
-  console.log(response) //todo remove
+  try {
+    let response = await fetch(
+      "http://127.0.0.1:8001/team/create", //todo use domain
+      requestOptions
+    );
+    if (!response.ok) {
+      console.log(response.status); // todo handle 400, 403 422 and 5XX
+    }
+  } catch (error) {
+    console.log(error); // todo display error
+  }
 
   isSubmitting.value = false;
 };
