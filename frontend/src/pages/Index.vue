@@ -28,20 +28,21 @@ const submit = async (entries) => {
     players: getPlayers(entries),
   };
 
+  const key = entries.key.replace(/"/g, ""); // expect users to copy pasta
+
   const requestOptions = {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${entries.key}`,
+      Authorization: `Bearer ${key}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(payload),
   };
 
+  const url = "https://marciland.net/kickerliga-bochum/api/team/create";
+
   try {
-    let response = await fetch(
-      "http://127.0.0.1:8001/team/create", //todo use domain
-      requestOptions
-    );
+    let response = await fetch(url, requestOptions);
     if (!response.ok) {
       console.log(response.status); // todo handle 400, 403 422 and 5XX
     }
@@ -119,12 +120,13 @@ const submit = async (entries) => {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 1329px;
+  max-width: 1200px;
 }
 .field {
   display: flex;
   flex-direction: column;
   text-align: center;
+  max-width: 200px;
 }
 .field-input {
   margin: 5px;

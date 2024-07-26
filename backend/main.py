@@ -18,7 +18,8 @@ def start() -> FastAPI | None:
     args = get_arguments()
     docs_url = '/docs' if args.develop else None
 
-    api = FastAPI(docs_url=docs_url, redoc_url=None)
+    api = FastAPI(root_path='/kickerliga-bochum/api',
+                  docs_url=docs_url, redoc_url=None)
 
     api.add_middleware(
         CORSMiddleware,
