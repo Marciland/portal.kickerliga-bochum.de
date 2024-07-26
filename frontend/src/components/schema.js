@@ -25,6 +25,7 @@ const validSchema = yup.object().shape({
   ...Array.from({ length: 2 }, (_, i) => ({
     [`mk-field${i + 1}`]: yup
       .string()
+      .required("MK notwendig!")
       .test("is name valid", "Kein gültiger Name!", (value) => {
         return value === undefined || value === null || value === ""
           ? true
