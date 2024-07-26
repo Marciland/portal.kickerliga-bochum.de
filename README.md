@@ -14,17 +14,22 @@ This repository contains the code for the portal subdomain of the kickerliga-boc
 
 ## Technologies Used
 
-- **Frontend**: Vue.js 3
-- **Backend**: Python 3.10.0
-- **Build Tool**: Vite
-- **Runtime**: Node.js v21.7.3
+- **Frontend**: Node.js v21.7.3
+- **Backend**: Python 3.10
 
 ## Installation
 
-To install the necessary dependencies, make sure you have Node.js (preferably v21.7.3) installed. Then, run the following command:
+To install the necessary dependencies, make sure you have Node.js (preferably v21.7.3) and Python3 (prefereably 3.10) installed.
+Then, run the following commands:
 
 ```sh
+cd frontend
 npm install
+```
+
+```sh
+cd backend
+pip install -r requirements.txt
 ```
 
 ## Running the Project
