@@ -20,7 +20,14 @@ class Auth(HTTPBearer):
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                 detail='Ungültiges Schema!')
         try:
-            return jwt.decode(credentials.credentials, self.key, algorithms=['HS256'])
+            payload: dict = jwt.decode(credentials.credentials,
+                                       self.key,
+                                       algorithms=['HS256'])
+            team = payload.get('team')
+            if not team:
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                                    detail='Ungültiger Payload!')
+            return team
         except ExpiredSignatureError as ex:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                 detail='Token abgelaufen!') from ex

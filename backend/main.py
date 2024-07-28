@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from argparse import ArgumentParser, Namespace
 
 import uvicorn
@@ -20,7 +21,7 @@ def get_arguments() -> Namespace:
 def start() -> FastAPI | None:
     args = get_arguments()
     docs_url = '/docs' if args.develop else None
-    secret: str = args.password
+    auth = Auth(args.password)
 
     api = FastAPI(root_path='/kickerliga-bochum/api',
                   docs_url=docs_url, redoc_url=None)
@@ -33,19 +34,18 @@ def start() -> FastAPI | None:
         allow_headers=['*']
     )
 
-    @api.post('/team/create', status_code=status.HTTP_201_CREATED,
-              dependencies=[Depends(Auth(secret))])
-    def create_team(team: TeamModel):
-        print(team)
+    @api.post('/team/create', status_code=status.HTTP_201_CREATED)
+    def create_team(team: TeamModel, team_name: str = Depends(auth)):
+        print(team, team_name)
 
     @api.get('/key', status_code=status.HTTP_200_OK,
-             dependencies=[Depends(Auth(secret).login)])
+             dependencies=[Depends(auth.login)])
     def get_key(team: str) -> str:
         payload = {
+            'exp': datetime.utcnow() + timedelta(days=100),
             'team': team
-            # add exp if wanted
         }
-        return Auth(secret).create_key(payload)
+        return auth.create_key(payload)
 
     return api
 
