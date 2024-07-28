@@ -1,11 +1,13 @@
-from datetime import datetime, timedelta
 from argparse import ArgumentParser, Namespace
+from datetime import datetime, timedelta
+from os import getcwd, makedirs, path
+from uuid import uuid4
 
 import uvicorn
 from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
-from auth import Auth
 from models import TeamModel
+from modules import Auth, dump_team_to_file
 
 
 def get_arguments() -> Namespace:
@@ -22,6 +24,8 @@ def start() -> FastAPI | None:
     args = get_arguments()
     docs_url = '/docs' if args.develop else None
     auth = Auth(args.password)
+    csv_path = path.join(getcwd(), 'csv')
+    makedirs(csv_path, exist_ok=True)
 
     api = FastAPI(root_path='/kickerliga-bochum/api',
                   docs_url=docs_url, redoc_url=None)
@@ -36,7 +40,13 @@ def start() -> FastAPI | None:
 
     @api.post('/team/create', status_code=status.HTTP_201_CREATED)
     def create_team(team: TeamModel, team_name: str = Depends(auth)):
-        print(team, team_name)
+        team.name = team_name
+        file_path = path.join(csv_path, str(uuid4()) + '.csv')
+        with open(file_path, 'w', newline='', encoding='utf-8') as file:
+            dump_team_to_file(team, file)
+        # construct E-Mail
+        # send email + csv as attachement
+        # cleanup
 
     @api.get('/key', status_code=status.HTTP_200_OK,
              dependencies=[Depends(auth.login)])
