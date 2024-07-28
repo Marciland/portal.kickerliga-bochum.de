@@ -37,7 +37,9 @@ pipeline {
                         println("${imageName} has not been running!")
                     }
                     withCredentials([string(credentialsId: 'kickerliga-bochum.de-password', variable: 'password')]) {
-                        sh "${dockerRun} ${imageName} -p 0.0.0.0:8001:8001 ${imageName}:latest -p ${password}"
+                        withCredentials([usernamePassword(credentialsId: 'marciland.net-mailtoken', usernameVariable: 'mailUser', passwordVariable: 'mailPass')]) {
+                            sh "${dockerRun} ${imageName} -p 0.0.0.0:8001:8001 ${imageName}:latest -p ${password} --mail-user ${mailUser} --mail-pass ${mailPass}"
+                        }
                     }
                     sh 'docker image prune -f'
                 }
