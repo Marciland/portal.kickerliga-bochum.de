@@ -1,6 +1,6 @@
 from argparse import ArgumentParser, Namespace
 from datetime import datetime, timedelta
-from os import getcwd, makedirs, path
+from os import getcwd, makedirs, path, remove
 from uuid import uuid4
 
 import uvicorn
@@ -42,11 +42,13 @@ def start() -> FastAPI | None:
     def create_team(team: TeamModel, team_name: str = Depends(auth)):
         team.name = team_name
         file_path = path.join(csv_path, str(uuid4()) + '.csv')
-        with open(file_path, 'w', newline='', encoding='utf-8') as file:
-            dump_team_to_file(team, file)
-        # construct E-Mail
-        # send email + csv as attachement
-        # cleanup
+        try:
+            with open(file_path, 'w', newline='', encoding='utf-8') as file:
+                dump_team_to_file(team, file)
+            # construct E-Mail
+            # send email + csv as attachement
+        finally:
+            remove(file_path)
 
     @api.get('/key', status_code=status.HTTP_200_OK,
              dependencies=[Depends(auth.login)])
