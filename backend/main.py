@@ -53,8 +53,8 @@ def start() -> FastAPI | None:
 
     @api.post('/team/create', status_code=status.HTTP_201_CREATED)
     def create_team(team: TeamModel, team_name: str = Depends(auth)):
-        # TODO validate team
         team.name = team_name
+        team.check_validity()  # this would raise
         csv_file_path = path.join(CSV_PATH, str(uuid4()) + '.csv')
         try:
             with open(csv_file_path, 'w', newline='', encoding='utf-8') as csv_file:
