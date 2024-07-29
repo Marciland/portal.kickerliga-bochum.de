@@ -1,10 +1,13 @@
 from argparse import ArgumentParser, Namespace
+from datetime import datetime, timedelta
+from os import getcwd, makedirs, path, remove
+from uuid import uuid4
 
 import uvicorn
 from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
-from auth import Auth
 from models import TeamModel
+from modules import Auth, dump_team_to_file
 
 
 def get_arguments() -> Namespace:
@@ -20,7 +23,9 @@ def get_arguments() -> Namespace:
 def start() -> FastAPI | None:
     args = get_arguments()
     docs_url = '/docs' if args.develop else None
-    secret: str = args.password
+    auth = Auth(args.password)
+    csv_path = path.join(getcwd(), 'csv')
+    makedirs(csv_path, exist_ok=True)
 
     api = FastAPI(root_path='/kickerliga-bochum/api',
                   docs_url=docs_url, redoc_url=None)
@@ -33,19 +38,26 @@ def start() -> FastAPI | None:
         allow_headers=['*']
     )
 
-    @api.post('/team/create', status_code=status.HTTP_201_CREATED,
-              dependencies=[Depends(Auth(secret))])
-    def create_team(team: TeamModel):
-        print(team)
+    @api.post('/team/create', status_code=status.HTTP_201_CREATED)
+    def create_team(team: TeamModel, team_name: str = Depends(auth)):
+        team.name = team_name
+        file_path = path.join(csv_path, str(uuid4()) + '.csv')
+        try:
+            with open(file_path, 'w', newline='', encoding='utf-8') as file:
+                dump_team_to_file(team, file)
+            # construct E-Mail
+            # send email + csv as attachement
+        finally:
+            remove(file_path)
 
     @api.get('/key', status_code=status.HTTP_200_OK,
-             dependencies=[Depends(Auth(secret).login)])
+             dependencies=[Depends(auth.login)])
     def get_key(team: str) -> str:
         payload = {
+            'exp': datetime.utcnow() + timedelta(days=100),
             'team': team
-            # add exp if wanted
         }
-        return Auth(secret).create_key(payload)
+        return auth.create_key(payload)
 
     return api
 
