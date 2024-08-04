@@ -1,5 +1,17 @@
 {
+  "files.exclude": {
+    "**/.pytest_cache": true
+  },
   "pylint.cwd": "${workspaceFolder}/backend",
   "python.analysis.extraPaths": ["${workspaceFolder}/backend"],
+  "python.testing.cwd": "${workspaceFolder}/backend",
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": [
+    "--rootdir=${workspaceFolder}/backend",
+    "--cov=models",
+    "--cov=modules",
+    "--cov-report=xml"
+  ],
   "editor.formatOnSave": true
 }

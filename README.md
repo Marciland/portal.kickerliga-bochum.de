@@ -79,11 +79,11 @@ This will run unit tests and start the development server, to run end to end tes
 To test the backend locally, use:
 
 ```sh
-python -m pytest --cov=models --cov=modules --cov-report=xml
-python -m coverage report
+python -m pytest --cov=models --cov=modules
+python -m coverage xml
 ```
 
-This will run unit tests and show the coverage.
+This will run unit tests and show the coverage. The coverage xml command creates a merged xml for coverage visualization.
 
 ## Deployment
 

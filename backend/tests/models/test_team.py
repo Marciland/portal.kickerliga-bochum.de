@@ -27,3 +27,12 @@ def test_TeamModel_check_validity(name, mk1, mk2, players, valid, exception):
             team.check_validity()
         except HTTPException as ex:
             pytest.fail(ex)
+
+
+@pytest.mark.parametrize('name, mk1, mk2, players, expected', [
+    ('Any Teamname', 'Any MK', 'Any Other MK',
+     ['Some Player'], ['Any MK', 'Any Other MK', 'Some Player'])
+])
+def test_TeamModel_get_full_team(name, mk1, mk2, players, expected):
+    team = TeamModel(name=name, mk1=mk1, mk2=mk2, players=players)
+    assert team.get_full_team() == expected

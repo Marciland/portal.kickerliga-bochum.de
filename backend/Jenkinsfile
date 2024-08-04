@@ -12,8 +12,7 @@ pipeline {
                     dir ('backend') {
                         sh 'pip install -r requirements.txt'
                         sh 'python -m pylint .'
-                        sh 'python -m pytest --cov=models --cov=modules --cov-report=xml'
-                        sh 'coverage report'
+                        sh 'python -m pytest --cov=models --cov=modules'
                     }
                 }
             }
