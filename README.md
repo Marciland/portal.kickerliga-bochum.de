@@ -80,10 +80,9 @@ To test the backend locally, use:
 
 ```sh
 python -m pytest --cov=models --cov=modules
-python -m coverage xml
 ```
 
-This will run unit tests and show the coverage. The coverage xml command creates a merged xml for coverage visualization.
+This will run unit tests and show the coverage. The coverage xml created is for coverage visualization. Recommended: "Coverage Gutters" in VSCode
 
 ## Deployment
 

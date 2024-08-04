@@ -7,11 +7,11 @@
   "python.testing.cwd": "${workspaceFolder}/backend",
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
+  "python.testing.autoTestDiscoverOnSaveEnabled": false,
   "python.testing.pytestArgs": [
     "--rootdir=${workspaceFolder}/backend",
     "--cov=models",
-    "--cov=modules",
-    "--cov-report=xml"
+    "--cov=modules"
   ],
   "editor.formatOnSave": true
 }
