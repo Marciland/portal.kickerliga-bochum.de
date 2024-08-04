@@ -11,7 +11,7 @@ class TeamModel(BaseModel):
     def check_validity(self) -> None:
         if self.name is None:
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                                detail='Das sollte nicht passieren!')
+                                detail='Name fehlt!')
         players = self.get_full_team()
         if len(players) < 4:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
@@ -20,7 +20,7 @@ class TeamModel(BaseModel):
             # replace '-' if it should be allowed
             if not name.replace(' ', '').isalpha():
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                                    detail='Ungültiger Name!')
+                                    detail=f'Ungültiger Spielername: {name}')
 
     def get_full_team(self) -> list[str]:
         return [self.mk1, self.mk2] + self.players

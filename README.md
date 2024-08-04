@@ -7,6 +7,7 @@ This repository contains the code for the portal subdomain of the kickerliga-boc
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Running the Project](#running-the-project)
+- [Testing](#testing)
 - [Deployment](#deployment)
 - [Features](#features)
 - [Contributing](#contributing)
@@ -58,6 +59,31 @@ python main.py -d
 ```
 
 This will start the development API, and you can view the API in your browser at `http://localhost:8001/docs`.
+
+## Testing
+
+### Frontend
+
+To test the frontend locally, use:
+
+```sh
+npm run unit-test
+npm run dev
+npm run e2e-test
+```
+
+This will run unit tests and start the development server, to run end to end tests against it.
+
+### Backend
+
+To test the backend locally, use:
+
+```sh
+python -m pytest --cov=models --cov=modules --cov-report=xml
+python -m coverage report
+```
+
+This will run unit tests and show the coverage.
 
 ## Deployment
 
