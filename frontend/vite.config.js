@@ -23,6 +23,7 @@ export default defineConfig({
         "**/main.js",
         "**/*.vue",
         "vite.config.js",
+        "tests",
       ],
       all: true,
     },
