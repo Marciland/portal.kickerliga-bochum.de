@@ -14,6 +14,11 @@ pipeline {
                         sh 'python -m pylint .'
                         sh 'python -m pytest --cov=models --cov=modules'
                     }
+                    dir ('frontend') {
+                        sh 'npm install'
+                        sh 'npm run unit-test'
+                        // sh 'npm run e2e-test' TODO
+                    }
                 }
             }
         }
@@ -22,6 +27,9 @@ pipeline {
                 script {
                     dir ('backend') {
                         sh "docker build --tag ${imageName}:latest ."
+                    }
+                    dir ('frontend') {
+                        sh 'npm run build'
                     }
                 }
             }
@@ -41,6 +49,7 @@ pipeline {
                         }
                     }
                     sh 'docker image prune -f'
+                    // TODO deploy frontend aswell?
                 }
             }
         }

@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted } from "vue";
+import { resizeMain } from "@/App";
 import * as bootstrap from "bootstrap";
 import {
   FooterNavbar,
@@ -7,22 +8,6 @@ import {
   HeaderLogo,
   HeaderMenu,
 } from "@/components";
-
-const resizeMain = () => {
-  const header = document.querySelector("header");
-  const footer = document.querySelector("footer");
-
-  if (header && footer) {
-    document.documentElement.style.setProperty(
-      "--header-height",
-      `${header.offsetHeight}px`
-    );
-    document.documentElement.style.setProperty(
-      "--footer-height",
-      `${footer.offsetHeight}px`
-    );
-  }
-};
 
 onMounted(() => {
   window.addEventListener("load", resizeMain);

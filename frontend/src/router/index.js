@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { Index } from "@/pages";
+import { Portal } from "@/pages";
 
 export const router = createRouter({
   history: createWebHistory(),
-  routes: [{ path: "/", component: Index }],
+  routes: [{ path: "/", component: Portal }],
 });

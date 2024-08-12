@@ -13,14 +13,16 @@
   },
   "dependencies": {
     "bootstrap": "5.3.3",
+    "vee-validate": "4.13.2",
     "vue": "3.4.33",
     "vue-router": "4.4.0",
-    "vee-validate": "4.13.2",
     "yup": "1.4.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "5.1.0",
+    "@vitest/coverage-istanbul": "2.0.5",
     "cypress": "13.8.1",
+    "jsdom": "24.1.1",
     "vite": "5.3.4",
     "vitest": "2.0.5"
   }
