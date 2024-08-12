@@ -1,2 +1,2 @@
-import Index from "@/pages/Index.vue";
-export { Index };
+import Portal from "@/pages/Portal.vue";
+export { Portal };

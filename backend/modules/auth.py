@@ -16,9 +16,6 @@ class Auth(HTTPBearer):
         if not credentials:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                 detail='Fehlende Autorisierung!')
-        if not credentials.scheme == 'Bearer':
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                detail='Ungültiges Schema!')
         try:
             payload: dict = jwt.decode(credentials.credentials,
                                        self.key,

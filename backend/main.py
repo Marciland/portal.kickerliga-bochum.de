@@ -64,8 +64,7 @@ def start() -> FastAPI | None:
             email = mail.create_email(content=formatted_email,
                                       subject=f'Neue Meldung: {team_name}')
             email.attach_file(csv_file_path, team.name + '.csv')
-            mail.send_email(email,  # TODO use kickerliga after testing
-                            to_address='marcel.marciland@gmail.com')
+            mail.send_email(email, to_address='kickerliga@gmx.net')
         finally:
             remove(csv_file_path)
 
