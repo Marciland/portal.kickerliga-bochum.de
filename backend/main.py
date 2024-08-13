@@ -7,8 +7,9 @@ import uvicorn
 from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 from models import EmailCreds, TeamModel
-from modules import Auth, MailClient, dump_team_to_file
+from modules import Auth, MailClient, dump_team_to_file, read_json
 
+TEAMS_PATH = path.join(getcwd(), 'teams.json')
 CSV_PATH = path.join(getcwd(), 'csv')
 TEMPLATE_PATH = path.join(getcwd(), 'templates')
 
@@ -64,18 +65,27 @@ def start() -> FastAPI | None:
             email = mail.create_email(content=formatted_email,
                                       subject=f'Neue Meldung: {team_name}')
             email.attach_file(csv_file_path, team.name + '.csv')
-            mail.send_email(email, to_address='kickerliga@gmx.net')
+            mail.send_email(email,
+                            to_address='teamportal@kickerliga-bochum.de')
         finally:
             remove(csv_file_path)
 
     @api.get('/key', status_code=status.HTTP_200_OK,
              dependencies=[Depends(auth.login)])
-    def get_key(team: str) -> str:
-        payload = {
-            'exp': datetime.utcnow() + timedelta(days=100),
-            'team': team
-        }
-        return auth.create_key(payload)
+    def get_key() -> dict:
+        file_content = read_json(TEAMS_PATH)
+        teams: list | None = file_content.get('teams')
+        if not teams:
+            return 'Ungültige JSON!'
+        result = {}
+        for team in teams:
+            payload = {
+                'exp': datetime.utcnow() + timedelta(days=100),
+                'team': team
+            }
+            key = auth.create_key(payload)
+            result.update({team: key})
+        return result
 
     return api
 
