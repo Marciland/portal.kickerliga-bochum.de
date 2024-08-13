@@ -34,7 +34,7 @@ const submit = async (entries) => {
           as="input"
           type="text"
           class="field-input"
-          :placeholder="`Name des MK${i}`"
+          :placeholder="`Name des Spielers (MK${i})`"
         />
         <ErrorMessage :name="`mk-field${i}`" />
       </div>
@@ -72,8 +72,8 @@ const submit = async (entries) => {
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - var(--header-height) - var(--footer-height));
-  margin-top: 30px;
-  margin-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 .field-container {
   display: flex;
@@ -96,6 +96,7 @@ const submit = async (entries) => {
 @media (min-width: 601px) {
   .field {
     padding: 10px;
+    max-width: 250px;
   }
 }
 </style>
