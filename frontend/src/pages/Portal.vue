@@ -72,8 +72,8 @@ const submit = async (entries) => {
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - var(--header-height) - var(--footer-height));
-  margin-top: 30px;
-  margin-bottom: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 .field-container {
   display: flex;
