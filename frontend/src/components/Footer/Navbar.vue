@@ -7,13 +7,6 @@
         <li class="footer-list-item">
           <a
             class="kickerliga-link"
-            href="https://kickerliga-bochum.de/wp-login.php"
-            >Log In</a
-          >
-        </li>
-        <li class="footer-list-item">
-          <a
-            class="kickerliga-link"
             href="https://kickerliga-bochum.de/praesidium/"
             >Präsidium</a
           >

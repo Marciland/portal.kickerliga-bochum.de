@@ -34,7 +34,7 @@ const submit = async (entries) => {
           as="input"
           type="text"
           class="field-input"
-          :placeholder="`Name des MK${i}`"
+          :placeholder="`Name des Spielers (MK${i})`"
         />
         <ErrorMessage :name="`mk-field${i}`" />
       </div>
@@ -96,6 +96,7 @@ const submit = async (entries) => {
 @media (min-width: 601px) {
   .field {
     padding: 10px;
+    max-width: 250px;
   }
 }
 </style>

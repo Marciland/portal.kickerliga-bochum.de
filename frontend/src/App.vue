@@ -21,7 +21,7 @@ onUnmounted(() => {
 <template>
   <header>
     <HeaderLogo />
-    <HeaderMenu />
+    <!-- <HeaderMenu /> -->
   </header>
   <main>
     <router-view />
