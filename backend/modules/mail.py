@@ -20,6 +20,9 @@ class Smtp:
         self.client.login(self.credentials.email,
                           self.credentials.password)
 
+    def logout(self) -> None:  # pragma: no cover
+        self.client.quit()
+
     def create_email(self, content: str, subject: str) -> Mail:
         mail = Mail(content, subject)
         mail['From'] = self.sender
