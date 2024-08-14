@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-import smtplib
 from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from smtplib import SMTP, SMTPAuthenticationError
 
+from fastapi import HTTPException, status
 from models import EmailCreds as Credentials
 
 
@@ -13,12 +14,21 @@ class Smtp:
     def __init__(self, credentials: Credentials):
         self.credentials = credentials
         self.sender = credentials.email
-        self.client = smtplib.SMTP(host='smtp.gmail.com', port=587)
-        self.client.starttls()
+        self.client = SMTP(host='smtp.gmail.com', port=587)
 
     def login(self) -> None:  # pragma: no cover
-        self.client.login(self.credentials.email,
-                          self.credentials.password)
+        try:
+            self.client.connect(host='smtp.gmail.com', port=587)
+            self.client.starttls()
+            self.client.login(self.credentials.email,
+                              self.credentials.password)
+        except SMTPAuthenticationError as ex:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                                detail="Failed to authenticate at mail server.") \
+                from ex
+
+    def logout(self) -> None:  # pragma: no cover
+        self.client.quit()
 
     def create_email(self, content: str, subject: str) -> Mail:
         mail = Mail(content, subject)

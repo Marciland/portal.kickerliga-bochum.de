@@ -1,22 +1,12 @@
 # pylint: skip-file
 from email.parser import BytesParser
 from email import policy
-import socket
-import ssl
 from unittest.mock import patch, mock_open
 from models import EmailCreds
 from modules import MailClient, Mail
 
 test_credentials = EmailCreds(email='test@test.test',
                               password='verystrongtestpassword')
-
-
-def test_Smtp_init():
-    smtp = MailClient(test_credentials)
-    assert smtp.credentials == test_credentials
-    assert smtp.sender == test_credentials.email
-    assert isinstance(smtp.client.sock, socket.socket)
-    assert isinstance(smtp.client.sock, ssl.SSLSocket)
 
 
 def test_Smtp_create_email():

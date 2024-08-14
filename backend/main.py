@@ -57,6 +57,7 @@ def start() -> FastAPI | None:
         team.name = team_name
         team.check_validity()  # this would raise
         csv_file_path = path.join(CSV_PATH, str(uuid4()) + '.csv')
+        mail.login()
         try:
             with open(csv_file_path, 'w', newline='', encoding='utf-8') as csv_file:
                 dump_team_to_file(team, csv_file)
@@ -69,6 +70,7 @@ def start() -> FastAPI | None:
                             to_address='teamportal@kickerliga-bochum.de')
         finally:
             remove(csv_file_path)
+            mail.logout()
 
     @api.get('/key', status_code=status.HTTP_200_OK,
              dependencies=[Depends(auth.login)])
