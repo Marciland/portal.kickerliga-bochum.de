@@ -34,6 +34,7 @@ def start() -> FastAPI | None:
     auth = Auth(args.password)
     mail = MailClient(EmailCreds(email=args.mail_user,
                                  password=args.mail_pass))
+    mail.login()
 
     with open(path.join(TEMPLATE_PATH, 'new_team_email.html'),
               'r', encoding='utf-8') as html_file:
