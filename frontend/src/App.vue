@@ -3,6 +3,7 @@ import { onMounted, onUnmounted } from "vue";
 import { resizeMain } from "@/App";
 import * as bootstrap from "bootstrap";
 import {
+  AlertComponent,
   FooterNavbar,
   FooterCopyright,
   HeaderLogo,
@@ -24,6 +25,7 @@ onUnmounted(() => {
     <!-- <HeaderMenu /> -->
   </header>
   <main>
+    <AlertComponent />
     <router-view />
   </main>
   <footer>
