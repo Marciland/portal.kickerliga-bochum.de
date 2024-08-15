@@ -1,3 +1,5 @@
+import { useAlertStore } from "@/stores";
+
 const getPlayers = (entries) => {
   let players = [];
 
@@ -29,18 +31,30 @@ const createRequestOptions = (entries) => {
   };
 };
 
+const handleResponse = async (alertStore, response) => {
+  if (response.ok) {
+    return alertStore.info("Daten wurden erfolgreich übermittelt!");
+  }
+  if (response.status === 401) {
+    return alertStore.error("Ungültiger Schlüssel!");
+  }
+  if ([400, 404].includes(response.status)) {
+    let body = await response.json();
+    return alertStore.error("Es ist ein Fehler aufgetreten:<br>" + body.detail);
+  }
+  alertStore.error(response.status);
+};
+
 const sendRequest = async (entries) => {
+  const alertStore = useAlertStore();
   const url = "https://marciland.net/kickerliga-bochum/api/team/create";
   const requestOptions = createRequestOptions(entries);
 
-  try {
-    let response = await fetch(url, requestOptions);
-    if (!response.ok) {
-      console.log(response.status); // todo handle 400, 403 422 and 5XX
-    }
-  } catch (error) {
-    console.log(error); // todo display error
-  }
+  await fetch(url, requestOptions)
+    .then((response) => handleResponse(alertStore, response))
+    .catch((error) =>
+      alertStore.error("Das sollte nicht passieren!<br>" + error)
+    );
 };
 
 export { getPlayers, createRequestOptions, sendRequest };

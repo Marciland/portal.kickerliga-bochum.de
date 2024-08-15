@@ -1,3 +1,10 @@
 import { FooterNavbar, FooterCopyright } from "@/components/Footer";
 import { HeaderLogo, HeaderMenu } from "@/components/Header";
-export { FooterNavbar, FooterCopyright, HeaderLogo, HeaderMenu };
+import AlertComponent from "@/components/Alert.vue";
+export {
+  AlertComponent,
+  FooterNavbar,
+  FooterCopyright,
+  HeaderLogo,
+  HeaderMenu,
+};
