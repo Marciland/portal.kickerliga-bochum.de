@@ -23,23 +23,10 @@ const validSchema = yup.object().shape({
       }
     }),
   ...Array.from({ length: 2 }, (_, i) => ({
-    [`mk-field${i + 1}`]: yup
-      .string()
-      .required("MK notwendig!")
-      .test("is name valid", "Kein gültiger Name!", (value) => {
-        return value === undefined || value === null || value === ""
-          ? true
-          : /^[A-Z][a-z]{2,} [A-Z][a-z]{2,}$/.test(value);
-      }),
+    [`mk-field${i + 1}`]: yup.string().required("MK notwendig!"),
   })).reduce((acc, curr) => ({ ...acc, ...curr }), {}),
   ...Array.from({ length: 18 }, (_, i) => ({
-    [`field${i + 1}`]: yup
-      .string()
-      .test("is name valid", "Kein gültiger Name!", (value) => {
-        return value === undefined || value === null || value === ""
-          ? true
-          : /^[A-Z][a-z]{2,} [A-Z][a-z]{2,}$/.test(value);
-      }),
+    [`field${i + 1}`]: yup.string(),
   })).reduce((acc, curr) => ({ ...acc, ...curr }), {}),
 });
 
