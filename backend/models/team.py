@@ -18,7 +18,7 @@ class TeamModel(BaseModel):
                                 detail='Zu wenig Spieler!')
         for name in players:
             # replace '-' if it should be allowed
-            if not name.replace(' ', '').isalpha():
+            if not name.replace(' ', '').replace('-', '').isalpha():
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                                     detail=f'Ungültiger Spielername: {name}')
 

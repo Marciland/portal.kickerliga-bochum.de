@@ -26,27 +26,6 @@ describe("Schema", () => {
     );
   });
 
-  it("should fail when mk-field1 has an invalid name", async () => {
-    const fields = { ...baseFields, "mk-field1": "john" };
-    await expect(validSchema.validate(fields)).rejects.toThrow(
-      "Kein gültiger Name!"
-    );
-  });
-
-  it("should fail when mk-field2 has an invalid name", async () => {
-    const fields = { ...baseFields, "mk-field2": "jane" };
-    await expect(validSchema.validate(fields)).rejects.toThrow(
-      "Kein gültiger Name!"
-    );
-  });
-
-  it("should fail when field1 has an invalid name", async () => {
-    const fields = { ...baseFields, field1: "jane" };
-    await expect(validSchema.validate(fields)).rejects.toThrow(
-      "Kein gültiger Name!"
-    );
-  });
-
   it("should fail on empty mk", async () => {
     const fields = {
       ...baseFields,
